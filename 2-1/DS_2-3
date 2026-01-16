@@ -1,0 +1,36 @@
+class Stack:
+    def __init__(self):
+        self.item = []
+
+    def push(self, val):
+        self.item.append(val)
+
+    def pop(self):
+        return self.item.pop()
+    
+    def top(self):
+        return self.item[-1]
+    
+    def isEmpty(self):
+        return len(self.item) == 0
+
+
+def compute_postfix(postfix):
+    S = Stack()
+    token_list = postfix.split()
+
+    for token in token_list:
+        if token in '+=*/':
+            later = float(S.pop())
+            former = float(S.pop())
+            if token == '+': S.push(former + later)
+            elif token == '-': S.push(former - later)
+            elif token == '*': S.push(former * later)
+            elif token == '/': S.push(former / later)
+        else:
+            S.push(float(token))
+    total = float(S.pop())
+    print(f"{total:.4f}")
+
+N = input()
+compute_postfix(N)
